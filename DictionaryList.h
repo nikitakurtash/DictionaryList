@@ -9,7 +9,7 @@ using namespace std;
 
 template<typename T>
 class DictionaryList {
-public:
+private:
     struct Node {
         T item;
         Node* next;
@@ -17,6 +17,7 @@ public:
 
     Node* head;
 
+public:
     DictionaryList();
 
     void insert_item(T item);
