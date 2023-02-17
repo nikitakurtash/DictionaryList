@@ -7,6 +7,58 @@ template<typename T> DictionaryList<T>::DictionaryList() {
 template DictionaryList<int>::DictionaryList<int>();
 template DictionaryList<string>::DictionaryList<string>();
 
+template<typename T> DictionaryList<T>::DictionaryList(const DictionaryList& list) //конструктор копирования 
+{
+    if (list.head == nullptr)
+    {
+        head = nullptr;
+        return;
+    }
+    head = new Node(list.head->item);
+    Node* srcPtr = list.head->next;
+    Node* destPtr = head;
+    while (srcPtr != nullptr)
+    {
+        destPtr->next = new Node(srcPtr->item);
+        destPtr = destPtr->next;
+        srcPtr = srcPtr->next;
+    }
+}
+template DictionaryList<int>::DictionaryList();
+template DictionaryList<string>::DictionaryList();
+
+template<typename T> DictionaryList<T>::DictionaryList(DictionaryList&& list) noexcept : //конструктор перемещения
+    head(list.head)
+{
+    list.head = nullptr;
+}
+template DictionaryList<int>::DictionaryList();
+template DictionaryList<string>::DictionaryList();
+
+template<typename T> void DictionaryList<T>::swap(DictionaryList& other) noexcept
+{
+    std::swap(head, other.head);
+}
+
+template<typename T> bool DictionaryList<T>::isEmpty()
+{
+    return head == nullptr;
+}
+
+template<typename T> DictionaryList<T>::~DictionaryList()
+{
+    if (head) {
+        Node* current = head;
+        while (current) {
+            current = current->next;
+            delete head;
+            head = current;
+        }
+    }
+}
+template DictionaryList<int>::~DictionaryList<int>();
+template DictionaryList<string>::~DictionaryList<string>();
+
 template<typename T> void DictionaryList<T>::insert_item(T item) {
     if (search_item(item)) return;
 
